@@ -1,0 +1,27 @@
+{
+  "name": "meta-lead-ads-backend",
+  "version": "1.0.0",
+  "description": "Backend webhook receiver and Socket.io broadcaster for Meta Lead Ads",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "meta",
+    "facebook",
+    "lead-ads",
+    "webhooks",
+    "socket.io",
+    "real-time"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
