@@ -32,7 +32,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({ lead, isLatest }) => {
     }
   }, [isLatest, highlightAnim]);
 
-  // Extract initials for the avatar
+  
   const getInitials = (name: string) => {
     if (!name) return 'ML';
     const parts = name.trim().split(' ');
@@ -44,7 +44,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({ lead, isLatest }) => {
 
   const handleCopy = async (text: string, label: string) => {
     await Clipboard.setStringAsync(text);
-    // In native or web, copies to clipboard
+    
   };
 
   const handleCall = () => {

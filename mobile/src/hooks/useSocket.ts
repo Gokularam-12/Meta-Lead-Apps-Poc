@@ -32,7 +32,7 @@ export function useSocket(initialServerUrl: string = DEFAULT_CONFIG.DEFAULT_BACK
       });
 
       socket.on('connect', () => {
-        console.log(`[Socket Hook] 🟢 Connected successfully (ID: ${socket.id})`);
+        console.log(`[Socket Hook] Connected successfully (ID: ${socket.id})`);
         setStatus('connected');
       });
 
@@ -41,10 +41,10 @@ export function useSocket(initialServerUrl: string = DEFAULT_CONFIG.DEFAULT_BACK
       });
 
       socket.on('new_lead', (newLead: Lead) => {
-        console.log('[Socket Hook] ⚡ Real-Time Lead Received:', newLead);
+        console.log('[Socket Hook]  Real-Time Lead Received:', newLead);
         
         setLeads((prevLeads) => {
-          // Prevent duplicates if received multiple times
+          
           const exists = prevLeads.some((l) => l.id === newLead.id || l.leadgen_id === newLead.leadgen_id);
           if (exists) {
             return prevLeads.map((l) => (l.id === newLead.id ? newLead : l));
@@ -55,30 +55,28 @@ export function useSocket(initialServerUrl: string = DEFAULT_CONFIG.DEFAULT_BACK
         setLatestLeadId(newLead.id);
         setLastEventTime(new Date().toLocaleTimeString());
 
-        // Reset highlight pulse after 4 seconds
         setTimeout(() => {
           setLatestLeadId(null);
         }, 4000);
       });
 
       socket.on('disconnect', (reason) => {
-        console.log(`[Socket Hook] 🔴 Socket disconnected: ${reason}`);
+        console.log(`[Socket Hook]  Socket disconnected: ${reason}`);
         setStatus('disconnected');
       });
 
       socket.on('connect_error', (error) => {
-        console.warn(`[Socket Hook] ⚠️ Connection error: ${error.message}`);
+        console.warn(`[Socket Hook] Connection error: ${error.message}`);
         setStatus('error');
       });
 
       socketRef.current = socket;
     } catch (err) {
-      console.error('[Socket Hook] 💥 Fatal socket initialization error:', err);
+      console.error('[Socket Hook] Fatal socket initialization error:', err);
       setStatus('error');
     }
   }, []);
 
-  // Initialize connection on mount and when serverUrl changes
   useEffect(() => {
     connectSocket(serverUrl);
 
@@ -94,9 +92,7 @@ export function useSocket(initialServerUrl: string = DEFAULT_CONFIG.DEFAULT_BACK
     connectSocket(serverUrl);
   }, [serverUrl, connectSocket]);
 
-  /**
-   * Helper function to trigger a synthetic lead via the backend /api/test-lead endpoint.
-   */
+  
   const triggerTestLead = async (customProfile?: Partial<Lead>) => {
     try {
       const response = await fetch(`${serverUrl.replace(/\/$/, '')}/api/test-lead`, {
@@ -110,7 +106,7 @@ export function useSocket(initialServerUrl: string = DEFAULT_CONFIG.DEFAULT_BACK
       const result = await response.json();
       return result;
     } catch (error) {
-      console.error('[Socket Hook] 💥 Error triggering test lead:', error);
+      console.error('[Socket Hook]  Error triggering test lead:', error);
       throw error;
     }
   };
