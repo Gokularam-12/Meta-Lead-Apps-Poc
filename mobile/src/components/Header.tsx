@@ -50,7 +50,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   const badge = getStatusBadge();
 
-  // Calculate safe top padding to prevent notch / status bar overlap on iOS and Android
   const dynamicTopPadding = Math.max(insets.top, Platform.OS === 'android' ? 16 : 12) + 6;
 
   return (
